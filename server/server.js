@@ -673,6 +673,12 @@ function onWebSocketRequest(ws, req) {
         folder: dir,
         results: filetree.search(query, dir)
       });
+    } else if (msg.type === "MOUNT") {
+      log.info("MOUNT ALL USB");
+    } else if (msg.type === "DISMOUNT") {
+      log.info("DISMOUNT ALL USB");
+    } else if (msg.type === "POWEROFF") {
+      log.info("SHUTDOWN");
     }
   });
 

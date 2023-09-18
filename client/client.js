@@ -1494,6 +1494,25 @@ function initButtons(view) {
       openDirectory(view, view[0].currentData);
     }
   }
+
+
+  // DRIVEPI ADDITIONS
+  function sendPowerOff() {
+    sendMessage(view[0].vId, "POWEROFF");
+  }
+  function sendDismount() {
+    sendMessage(view[0].vId, "DISMOUNT");
+  }
+  function sendMount() {
+    sendMessage(view[0].vId, "MOUNT");
+  }
+
+  // DRIVEPI ADDITIONS
+  view.off("click", ".poweroff").on("click", ".poweroff", sendPowerOff)
+  view.off("click", ".dismount").on("click", ".dismount", sendDismount)
+  view.off("click", ".mount").on("click", ".mount", sendMount)
+
+
   view.off("click", ".search.toggled-off").on("click", ".search.toggled-off", function() {
     const search = $(this);
     search.removeClass("toggled-off").addClass("toggled-on");
