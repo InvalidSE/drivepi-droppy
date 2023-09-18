@@ -673,6 +673,7 @@ function onWebSocketRequest(ws, req) {
         folder: dir,
         results: filetree.search(query, dir)
       });
+      // DRIVEPI ADDITIONS
     } else if (msg.type === "MOUNT") {
       log.info("MOUNT ALL USB");
     } else if (msg.type === "DISMOUNT") {

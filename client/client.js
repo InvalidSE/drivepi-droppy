@@ -1,3 +1,6 @@
+/* eslint-disable linebreak-style */
+/* eslint-disable no-multiple-empty-lines */
+
 "use strict";
 
 function promisify(fn) {
@@ -1508,10 +1511,9 @@ function initButtons(view) {
   }
 
   // DRIVEPI ADDITIONS
-  view.off("click", ".poweroff").on("click", ".poweroff", sendPowerOff)
-  view.off("click", ".dismount").on("click", ".dismount", sendDismount)
-  view.off("click", ".mount").on("click", ".mount", sendMount)
-
+  view.off("click", ".poweroff").on("click", ".poweroff", sendPowerOff);
+  view.off("click", ".dismount").on("click", ".dismount", sendDismount);
+  view.off("click", ".mount").on("click", ".mount", sendMount);
 
   view.off("click", ".search.toggled-off").on("click", ".search.toggled-off", function() {
     const search = $(this);
