@@ -525,11 +525,13 @@ function onWebSocketRequest(ws, req) {
     } else if (msg.type === "DELETE_FILE") {
       log.info(ws, null, `Deleting: ${msg.data}`);
       if (config.readOnly) return sendError(sid, vId, "Files are read-only");
+      if (config.privWriteOnly && !priv) return sendError(sid, vId, "Missing privileges");
       if (!validatePaths(msg.data, msg.type, ws, sid, vId)) return;
       filetree.del(msg.data);
     } else if (msg.type === "SAVE_FILE") {
-      log.info(ws, null, `Saving: ${msg.data.to}`);
+      log.info(ws, null, `Saving: ${msg.data.to}`, priv ? " (privileged) " : " (not privelaged) ", msg.data.value.length, " bytes");
       if (config.readOnly) return sendError(sid, vId, "Files are read-only");
+      if (config.privWriteOnly && !priv) return sendError(sid, vId, "Missing privileges");
       if (!validatePaths(msg.data.to, msg.type, ws, sid, vId)) return;
       filetree.save(msg.data.to, msg.data.value, err => {
         if (err) {
@@ -938,7 +940,8 @@ function handlePOST(req, res) {
   }
 
   if (/^\/!\/upload/.test(URI)) {
-    handleUploadRequest(req, res);
+    const priv = Boolean((db.get("sessions")[cookies.get(req.headers.cookie)] || {}).privileged);
+    handleUploadRequest(req, res, priv);
   } else if (/^\/!\/logout$/.test(URI)) {
     res.setHeader("Content-Type", "text/plain");
     utils.readJsonBody(req).then(postData => {
@@ -1119,13 +1122,20 @@ async function handleTypeRequest(req, res, file) {
   log.info(req, res);
 }
 
-function handleUploadRequest(req, res) {
+function handleUploadRequest(req, res, priv) {
   let done = false;
 
   if (config.readOnly) {
     res.statusCode = 403;
     res.end();
     log.info(req, res, "Upload cancelled because of read-only mode");
+    return;
+  }
+
+  if (!priv && config.privWriteOnly) {
+    res.statusCode = 401;
+    res.end();
+    log.info(req, res, "Upload cancelled because of missing privileges");
     return;
   }
 

@@ -26,6 +26,7 @@ const defaults = {
   uploadTimeout: 604800000,
   allowFrame: false,
   readOnly: false,
+  privWriteOnly: false,
   ignorePatterns: [],
   watch: true,
   headers: {},
