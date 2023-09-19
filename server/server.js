@@ -545,6 +545,7 @@ function onWebSocketRequest(ws, req) {
       const type = msg.data.type;
       log.info(ws, null, `Clipboard ${type}: ${src} -> ${dst}`);
       if (config.readOnly) return sendError(sid, vId, "Files are read-only");
+      if (config.privWriteOnly && !priv) return sendError(sid, vId, "Missing privileges");
       if (!validatePaths([src, dst], msg.type, ws, sid, vId)) return;
       if (new RegExp(`^${escRe(msg.data.src)}/`).test(msg.data.dst)) {
         return sendError(sid, vId, "Can't copy directory into itself");
@@ -561,18 +562,21 @@ function onWebSocketRequest(ws, req) {
       });
     } else if (msg.type === "CREATE_FOLDER") {
       if (config.readOnly) return sendError(sid, vId, "Files are read-only");
+      if (config.privWriteOnly && !priv) return sendError(sid, vId, "Missing privileges");
       if (!validatePaths(msg.data, msg.type, ws, sid, vId)) return;
       filetree.mkdir(msg.data, err => {
         if (err) sendError(sid, vId, `Error creating folder: ${err.message}`);
       });
     } else if (msg.type === "CREATE_FILE") {
       if (config.readOnly) return sendError(sid, vId, "Files are read-only");
+      if (config.privWriteOnly && !priv) return sendError(sid, vId, "Missing privileges");
       if (!validatePaths(msg.data, msg.type, ws, sid, vId)) return;
       filetree.mk(msg.data, err => {
         if (err) sendError(sid, vId, `Error creating file: ${err.message}`);
       });
     } else if (msg.type === "RENAME") {
       if (config.readOnly) return sendError(sid, vId, "Files are read-only");
+      if (config.privWriteOnly && !priv) return sendError(sid, vId, "Missing privileges");
       const rSrc = msg.data.src;
       const rDst = msg.data.dst;
       // Disallow whitespace-only and empty strings in renames

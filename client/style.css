@@ -632,8 +632,9 @@ html:not(.mobile) #entry-menu a.active {
 }
 
 .readonly a.rename, .readonly a.copy, .readonly a.cut, .readonly a.delete,
-.readonly .af, .readonly .ad, .readonly .cf, .readonly .cd,
+.readonly .af, .readonly .ad, .readonly .cf, .readonly .cd, 
 .readonly .movefile, .readonly .copyfile, .public .logout,
+.readonly .mount, .readonly .poweroff, .readonly .dismount,
 .readonly .sidebar .save, .readonly .delete-file {
   display: none !important;
 }
