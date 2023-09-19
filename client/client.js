@@ -410,8 +410,10 @@ function openSocket() {
         if (droppy.dev) {
           window.droppy = droppy;
         }
-        if (droppy.readOnly) {
+        if (droppy.readOnly || !droppy.priv) {
           document.documentElement.classList.add("readonly");
+        } else {
+          document.documentElement.classList.remove("readonly");
         }
         if (droppy.public) {
           document.documentElement.classList.add("public");
@@ -1342,7 +1344,7 @@ function bindDropEvents(view) {
   // file drop
   (new Uppie())(view[0], (e, fd, files) => {
     if (!files.length) return;
-    if (droppy.readOnly) return showError(view, "Files are read-only.");
+    if (droppy.readOnly || !droppy.priv) return showError(view, "Files are read-only.");
     e.stopPropagation();
     if (!validateFiles(files, view)) return;
     upload(view, fd, files);
