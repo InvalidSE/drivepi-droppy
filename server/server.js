@@ -685,7 +685,13 @@ function onWebSocketRequest(ws, req) {
     } else if (msg.type === "DISMOUNT") {
       log.info("DISMOUNT ALL USB");
     } else if (msg.type === "POWEROFF") {
-      log.info("SHUTDOWN");
+      log.info("Shutting down...");
+      require("child_process").exec("echo sudo /sbin/shutdown -r now", (error) => {
+        if (error) {
+          log.error(`exec error: ${error}`);
+          return;
+        }
+      });
     }
   });
 
