@@ -684,38 +684,59 @@ function onWebSocketRequest(ws, req) {
       log.info("Mounting USBs...");
       require("child_process").exec("sh mount.sh", {
         cwd: "/srv/droppy/config/"
-      }, (error) => {
+      }, (error, stdout, stderr) => {
         if (error) {
           log.error(`exec error: ${error}`);
           return;
         }
+        if (stderr) {
+          log.error(`stderr: ${stderr}`);
+          return;
+        }
+        log.info(`stdout: ${stdout}`);
       });
     } else if (msg.type === "DISMOUNT") {
       log.info("Dismounting USBs...");
       require("child_process").exec("sh dismount.sh", {
         cwd: "/srv/droppy/config/"
-      }, (error) => {
+      }, (error, stdout, stderr) => {
         if (error) {
           log.error(`exec error: ${error}`);
           return;
         }
+        if (stderr) {
+          log.error(`stderr: ${stderr}`);
+          return;
+        }
+        log.info(`stdout: ${stdout}`);
       });
     } else if (msg.type === "POWEROFF") {
-      log.info("Shutting down...");
+      log.info("Dismounting...");
       require("child_process").exec("sh dismount.sh", {
         cwd: "/srv/droppy/config/"
-      }, (error) => {
+      }, (error, stdout, stderr) => {
         if (error) {
           log.error(`exec error: ${error}`);
           return;
         }
+        if (stderr) {
+          log.error(`stderr: ${stderr}`);
+          return;
+        }
+        log.info(`stdout: ${stdout}`);
       });
+      log.info("Shutting down in 5 seconds...");
       setTimeout(() => {
-        require("child_process").exec("echo sudo /sbin/shutdown -h now", (error) => {
+        require("child_process").exec("sudo /sbin/shutdown -h now", (error, stdout, stderr) => {
           if (error) {
             log.error(`exec error: ${error}`);
             return;
           }
+          if (stderr) {
+            log.error(`stderr: ${stderr}`);
+            return;
+          }
+          log.info(`stdout: ${stdout}`);
         });
       }, 5000);
     }
