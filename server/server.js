@@ -701,7 +701,7 @@ function onWebSocketRequest(ws, req) {
         }
       });
     } else if (msg.type === "POWEROFF") {
-      log.info("Shutting down...");
+      log.info("Dismounting...");
       require("child_process").exec("sh dismount.sh", {
         cwd: "/srv/droppy/config/"
       }, (error) => {
@@ -710,8 +710,9 @@ function onWebSocketRequest(ws, req) {
           return;
         }
       });
+      log.info("Shutting down in 5 seconds...");
       setTimeout(() => {
-        require("child_process").exec("echo sudo /sbin/shutdown -h now", (error) => {
+        require("child_process").exec("sudo /sbin/shutdown -h now", (error) => {
           if (error) {
             log.error(`exec error: ${error}`);
             return;
