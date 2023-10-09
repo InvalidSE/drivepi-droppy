@@ -681,17 +681,37 @@ function onWebSocketRequest(ws, req) {
       });
       // DRIVEPI ADDITIONS
     } else if (msg.type === "MOUNT") {
-      log.info("MOUNT ALL USB");
-    } else if (msg.type === "DISMOUNT") {
-      log.info("DISMOUNT ALL USB");
-    } else if (msg.type === "POWEROFF") {
-      log.info("Shutting down...");
-      require("child_process").exec("echo sudo /sbin/shutdown -r now", (error) => {
+      log.info("Mounting USBs...");
+      require("child_process").exec("sh mount.sh", (error) => {
         if (error) {
           log.error(`exec error: ${error}`);
           return;
         }
       });
+    } else if (msg.type === "DISMOUNT") {
+      log.info("Dismounting USBs...");
+      require("child_process").exec("sh dismount.sh", (error) => {
+        if (error) {
+          log.error(`exec error: ${error}`);
+          return;
+        }
+      });
+    } else if (msg.type === "POWEROFF") {
+      log.info("Shutting down...");
+      require("child_process").exec("sh dismount.sh", (error) => {
+        if (error) {
+          log.error(`exec error: ${error}`);
+          return;
+        }
+      });
+      setTimeout(() => {
+        require("child_process").exec("echo sudo /sbin/shutdown -h now", (error) => {
+          if (error) {
+            log.error(`exec error: ${error}`);
+            return;
+          }
+        });
+      }, 5000);
     }
   });
 
