@@ -682,7 +682,9 @@ function onWebSocketRequest(ws, req) {
       // DRIVEPI ADDITIONS
     } else if (msg.type === "MOUNT") {
       log.info("Mounting USBs...");
-      require("child_process").exec("sh mount.sh", (error) => {
+      require("child_process").exec("sh mount.sh", {
+        cwd: "/srv/droppy/config/"
+      }, (error) => {
         if (error) {
           log.error(`exec error: ${error}`);
           return;
@@ -690,7 +692,9 @@ function onWebSocketRequest(ws, req) {
       });
     } else if (msg.type === "DISMOUNT") {
       log.info("Dismounting USBs...");
-      require("child_process").exec("sh dismount.sh", (error) => {
+      require("child_process").exec("sh dismount.sh", {
+        cwd: "/srv/droppy/config/"
+      }, (error) => {
         if (error) {
           log.error(`exec error: ${error}`);
           return;
@@ -698,7 +702,9 @@ function onWebSocketRequest(ws, req) {
       });
     } else if (msg.type === "POWEROFF") {
       log.info("Shutting down...");
-      require("child_process").exec("sh dismount.sh", (error) => {
+      require("child_process").exec("sh dismount.sh", {
+        cwd: "/srv/droppy/config/"
+      }, (error) => {
         if (error) {
           log.error(`exec error: ${error}`);
           return;
