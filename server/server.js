@@ -727,7 +727,11 @@ function onWebSocketRequest(ws, req) {
       });
       log.info("Shutting down in 5 seconds...");
       setTimeout(() => {
+<<<<<<< HEAD
         require("child_process").exec("sudo /sbin/shutdown -h now", (error, stdout, stderr) => {
+=======
+        require("child_process").exec("sudo /sbin/shutdown -h now", (error) => {
+>>>>>>> master
           if (error) {
             log.error(`exec error: ${error}`);
             return;
