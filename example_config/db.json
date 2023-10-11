@@ -1,0 +1,45 @@
+{
+  "users": {
+    "admin": {
+      "hash": "1c39ca4b8b1b97e4c336e11cfcd54bb2ffd0dc2eee5932fbec89da66b8677101$90e7d16d",
+      "privileged": true
+    },
+    "user": {
+      "hash": "6b46093bfa6a34ff931e10e7b7b2dfae788c06d7d9d8423f1470f5260c914bbb$0d31bf38",
+      "privileged": false
+    }
+  },
+  "sessions": {
+    "UgglZom9a+GAmhvJ92QDLa98aBviABWEON4TXsbHK8MdhD4/": {
+      "privileged": true,
+      "username": "admin",
+      "lastSeen": 1695077398565
+    },
+    "pTvjgaOeUqxa8aXV+LuNmJlOUYIfYin+TEPe9s23N0XKMfAu": {
+      "privileged": true,
+      "username": "admin",
+      "lastSeen": 1695164223579
+    },
+    "6loJvM6kHGYQOvgkF7a1VXTxfKGdetyobBSacUBxIn2tSGKJ": {
+      "privileged": true,
+      "username": "admin",
+      "lastSeen": 1695169395150
+    },
+    "lJWWNsGSYL7IcZJGG07u14CjgRUayIVahSUSPBEMaNOLlQH8": {
+      "privileged": true,
+      "username": "admin",
+      "lastSeen": 1696821735784
+    },
+    "lkcDV08lgKpOH5wdjd6tIaQJZAqpqITosfWg1z7ipzRYeHzZ": {
+      "privileged": true,
+      "username": "admin",
+      "lastSeen": 1696835977615
+    },
+    "C+vgdSdc8VeKOTQIAvppfy7Tg0fm01Y47BhRIW56hG8Sbb0d": {
+      "privileged": true,
+      "username": "admin",
+      "lastSeen": 1697063059722
+    }
+  },
+  "links": {}
+}
